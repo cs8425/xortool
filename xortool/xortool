@@ -7,14 +7,15 @@ xortool
   - guess the key (base on knowledge of most frequent char)
 
 Usage:
-  xortool [-x] [-m MAX-LEN] [FILE]
-  xortool [-x] [-l LEN] [-c CHAR | -b | -o] [FILE]
-  xortool [-x] [-m MAX-LEN| -l LEN] [-c CHAR | -b | -o] [FILE]
+  xortool [-x] [-s] [-m MAX-LEN] [FILE]
+  xortool [-x] [-s] [-l LEN] [-c CHAR | -b | -o] [FILE]
+  xortool [-x] [-s] [-m MAX-LEN| -l LEN] [-c CHAR | -b | -o] [FILE]
   xortool [-h | --help]
   xortool --version
 
 Options:
   -x --hex                          input is hex-encoded str
+  -s, --color                       color print
   -l LEN, --key-length=LEN          length of the key
   -m MAX-LEN, --max-keylen=MAX-LEN  maximum key length to probe [default: 65]
   -c CHAR, --char=CHAR              most frequent char (one char or hex code)
@@ -50,6 +51,27 @@ def main():
     global PARAMETERS
     try:
         PARAMETERS = parse_parameters(__doc__, xortool.__version__)
+
+        if not PARAMETERS["color"]:
+            global C_RESET, C_FATAL, C_WARN
+            C_RESET = ""
+            C_FATAL = ""
+            C_WARN = ""
+
+            global C_KEYLEN, C_PROB, C_BEST_KEYLEN, C_BEST_PROB
+            C_KEYLEN = ""
+            C_PROB = ""
+            C_BEST_KEYLEN = ""
+            C_BEST_PROB = ""
+
+            global C_DIV
+            C_DIV = ""
+
+            global C_KEY, C_BOLD, C_COUNT
+            C_KEY = ""
+            C_BOLD = ""
+            C_COUNT = ""
+
         ciphertext = get_ciphertext()
         update_key_length(ciphertext)
 
@@ -296,10 +318,11 @@ def print_keys(keys):
     s1 = C_COUNT + str(len(keys)) + C_RESET
     s2 = C_COUNT + str(len(keys[0])) + C_RESET
     print "{} possible key(s) of length {}:".format(s1, s2)
-    for key in keys[:5]:
+#    for key in keys[:5]:
+    for key in keys[:]:
         print C_KEY + repr(key)[1:-1] + C_RESET
-    if len(keys) > 10:
-        print "..."
+#    if len(keys) > 10:
+#        print "..."
 
 
 # -----------------------------------------------------------------------------

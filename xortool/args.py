@@ -15,6 +15,7 @@ def parse_parameters(doc, version):
     p = {k.lstrip("-"): v for k, v in p.items()}
     try:
         return {
+            "color": bool(p["color"]),
             "input_is_hex": bool(p["hex"]),
             "max_key_length": int(p["max-keylen"]),
             "known_key_length": int(p["key-length"]) if p["key-length"] else None,
