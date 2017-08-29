@@ -19,7 +19,7 @@ setup(name='xortool',
 
       packages=['xortool'],
       provides=['xortool'],
-      install_requires=['docopt>=0.6.1'],
+#      install_requires=['docopt>=0.6.1'],
       scripts=["xortool/xortool", "xortool/xortool-xor"],
 
       classifiers=['Development Status :: 4 - Beta',
